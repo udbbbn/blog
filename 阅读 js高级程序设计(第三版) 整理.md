@@ -2,8 +2,57 @@
 ---
 #### Javascript 高级程序设计(第3版)
 
-1. script 标签可添加 **defer** 跟 **async** 实现异步，只对外部脚本有效。
+1. script 标签可添加 `defer` 跟 `async` 实现异步，只对外部脚本有效。
     defer：将脚本推迟到文档完全解析后执行。
     async：脚本下载完就执行，无法确保执行时 Dom 已经渲染完成。
     以上两种方式下载时都是跟 Dom 渲染是并行的。只有**执行时**才阻塞。并且无法确保多个脚本执行顺序。
-2.
+2.  对 **声明未赋值的值** 跟 **未声明的值** 执行 `typeof` 结果都会是 `undefined`。同时，若使用了 **未声明的值** 会报错，反之则不会。
+3. 对于 `undefined == null` 为 `true` 这个结果，本质上解释应该是 `undefined` 派生于 `null`。ECMA-262 规定它们相等性测试要等于 `true`。
+4. `parseInt` 遇到 **空字符串** 会返回 `NaN`。`parseInt` 会忽略空格且 **第一个字符** 若不是数字或符号 直接返回 `NaN`。 而 `Number` 遇到 **空字符串** 会返回 `0`。
+5. `NaN` 与 **任何操作数** 进行（大于、小于）比较，结果都会是 `false`。若进行 **等于** 比较，则 **相等操作符** 为 `false`。 **不相等操作符** 返回 `true`。
+6. `,` 逗号操作符总是会返回表达式中的最后一项。
+   如 `const a = ( 5, 4, 3, 2, 1 )` 则 `a = 1`
+7. `label` 语句可在循环中配合 `break` 跟 `continue` 使用。例：
+    ```js
+    let num = 0;
+    labelTest:
+    for (let i = 0; i < 10; i++) {
+        for (let j = 0; j < i; j++) {
+            if (i === 5 && j === 5) {
+                break labelTest
+            }
+            num++
+        }
+    }
+    console.log(num) // 55  若为 continue 则 95
+    ```
+8. 书中表明 **ECMAScript中所有参数传递的都是值，不可能通过引用传递参数**。
+
+#### 平时积累知识碎片
+
+##### 1. offset 跟 getBoundingClientRect 的差异
+<table>
+    <tr>
+        <td></td>
+        <td>getBoundingClientRect</td>
+        <td>offset</td>
+    </td>
+    <tr>
+        <td>不同点</td>
+        <td>基于 viewport 定位元素</td>
+        <td>基于最近的一个 position 非 <b>static</b> 的父级元素</td>
+    </td>
+    <tr>
+        <td></td>
+        <td>会计算 <b>translate</b> 值</td>
+        <td>不会计算 <b>translate</b> 值</td>
+    </td>
+    <tr>
+        <td>相同点</td>
+        <td colspan="2">都是相对位置，可为负数，结果值都为 px 单位</td>
+    </td>
+    <tr>
+        <td></td>
+        <td colspan="2">都会计算 <b>left</b> <b>top</b> 值，以及 <b>margin</b> 值</td>
+    </td>
+</table>
