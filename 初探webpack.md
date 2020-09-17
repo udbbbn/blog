@@ -213,6 +213,7 @@ module.build => module.doBuild => runLoaders
 这里还需要注意的是 `compilation` 中不同队列的 `processor` 是不同函数。
 
 ![20200911190925](https://raw.githubusercontent.com/udbbbn/Img/master/20200911190925.png)
+>图片中的代码位置在 `compilation` 文件中。
 
 因为 `webpack` 中大量使用了**异步**、**hooks** 等方式，比较乱。建议配合着源码调试阅读。 
 到这一步，代表我们的代码已经经过 `loader` 编译成标准的 `js` 代码了。接下来就是解析标准 `js` 代码。在 `normalModule` 中有如下代码：
